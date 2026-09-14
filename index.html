@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+
+<!-- ===== Site verification (Bengalads) ===== -->
+<meta name="bengalads-site-verification" content="a6c6be14b3a6e92ce086c579694e75bf9f5eed009437bafd">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Metxpal — Coming Soon</title>
+<style>
+  :root{
+    --ink-0:#0d0e1a;
+    --ink-1:#585b72;
+    --ink-2:#9497ab;
+    --line:#eceaf4;
+    --blue:#2b6bff;
+    --cyan:#22c6ef;
+    --violet:#7b2bf9;
+    --magenta:#c729e0;
+    --paper:#ffffff;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html, body{ height:100%; }
+
+  body{
+    background:var(--paper);
+    color:var(--ink-0);
+    font-family:'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    min-height:100vh;
+    min-height:100dvh;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* very soft radial wash, kept subtle so the canvas still reads as white */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 8%, rgba(123,43,249,0.05), transparent 60%),
+      radial-gradient(ellipse 50% 35% at 85% 90%, rgba(34,198,239,0.05), transparent 60%);
+    pointer-events:none;
+    z-index:0;
+  }
+
+  .stage{
+    position:relative;
+    width:100%;
+    max-width:760px;
+    padding:40px 32px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    z-index:1;
+  }
+
+  /* ===== Main mark (Metxpal) ===== */
+  .mark-wrap{
+    width:min(72vw, 300px);
+    aspect-ratio:1737/906;
+    margin-bottom:20px;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+  }
+
+  .mark-wrap img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    display:block;
+  }
+
+  @keyframes rise{
+    from{ opacity:0; transform:translateY(12px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  /* ===== Visitor counter pill ===== */
+  .visitors{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:6px 14px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#faf9fd;
+    color:var(--ink-1);
+    font-size:12.5px;
+    letter-spacing:0.01em;
+    margin-bottom:16px;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.03s;
+  }
+
+  .visitors svg{ width:14px; height:14px; opacity:.6; }
+
+  .visitors b{
+    color:var(--ink-0);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ===== Status pill ===== */
+  .status{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:7px 15px;
+    border:1px solid var(--line);
+    border-radius:999px;
+    background:#faf9fd;
+    color:var(--ink-1);
+    font-size:13px;
+    letter-spacing:0.01em;
+    margin-bottom:26px;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.06s;
+  }
+
+  .status .dot{
+    width:7px; height:7px; border-radius:50%;
+    background:linear-gradient(135deg, var(--cyan), var(--magenta));
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes pulse{
+    0%,100%{ opacity:1; }
+    50%{ opacity:.3; }
+  }
+
+  /* ===== Headline ===== */
+  h1{
+    font-size:clamp(1.9rem, 5.4vw, 3rem);
+    font-weight:650;
+    line-height:1.18;
+    letter-spacing:-0.02em;
+    color:var(--ink-0);
+    max-width:15ch;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.12s;
+  }
+
+  .sub{
+    margin-top:16px;
+    font-size:clamp(1rem, 2vw, 1.1rem);
+    line-height:1.6;
+    color:var(--ink-1);
+    max-width:44ch;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.18s;
+  }
+
+  /* ===== Countdown ===== */
+  .countdown{
+    display:flex;
+    gap:12px;
+    margin-top:42px;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.24s;
+  }
+
+  .cbox{
+    width:74px;
+    padding:15px 0 13px;
+    border-radius:16px;
+    border:1px solid var(--line);
+    background:#fcfbfe;
+  }
+
+  .cnum{
+    font-size:1.85rem;
+    font-weight:700;
+    font-variant-numeric: tabular-nums;
+    background:linear-gradient(135deg, var(--blue), var(--violet) 55%, var(--magenta));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .clabel{
+    margin-top:4px;
+    font-size:11px;
+    color:var(--ink-2);
+    letter-spacing:0.03em;
+  }
+
+  .csep{
+    align-self:center;
+    color:var(--ink-2);
+    font-size:1.3rem;
+    transform:translateY(-8px);
+  }
+
+  /* ===== Download button ===== */
+  .download-btn{
+    margin-top:40px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    padding:15px 28px;
+    border-radius:14px;
+    border:1px solid var(--line);
+    background:#f4f3f8;
+    color:var(--ink-2);
+    font-size:15px;
+    font-weight:600;
+    cursor:not-allowed;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.3s;
+    user-select:none;
+    transition: all .25s ease;
+  }
+
+  .download-btn.enabled{
+    cursor:pointer;
+    background:linear-gradient(135deg, var(--blue), var(--violet) 55%, var(--magenta));
+    color:#fff;
+    border-color:transparent;
+  }
+
+  .download-btn.enabled svg{ opacity:1; }
+
+  .download-btn svg{
+    width:18px; height:18px;
+    opacity:.55;
+  }
+
+  .download-note{
+    margin-top:12px;
+    font-size:12.5px;
+    color:var(--ink-2);
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.34s;
+  }
+
+  /* ===== Powered by Orame ===== */
+  .powered{
+    margin-top:56px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:8px;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.42s;
+  }
+
+  .powered-label{
+    font-size:11px;
+    color:var(--ink-2);
+    letter-spacing:0.03em;
+  }
+
+  .powered img{
+    height:22px;
+    width:auto;
+    object-fit:contain;
+    opacity:.9;
+  }
+
+  /* ===== Ad slot ===== */
+  .ad-slot{
+    margin-top:40px;
+    display:flex;
+    justify-content:center;
+    width:100%;
+    min-height:50px;
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.46s;
+  }
+
+  footer{
+    margin-top:26px;
+    padding-bottom:8px;
+    font-size:12px;
+    color:var(--ink-2);
+    animation: rise .9s cubic-bezier(.16,1,.3,1) both;
+    animation-delay:.48s;
+  }
+
+  @media (max-width:480px){
+    .cbox{ width:58px; padding:12px 0 10px; }
+    .cnum{ font-size:1.4rem; }
+    .countdown{ gap:7px; }
+    .download-btn{ padding:13px 22px; font-size:14px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.01ms !important; animation-iteration-count:1 !important; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="stage">
+
+    <div class="mark-wrap">
+      <img src="metxpal-logo.png" alt="Metxpal">
+    </div>
+
+    <div class="visitors">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+      <span id="visitor-count"><b>—</b> visits</span>
+    </div>
+
+    <div class="status"><span class="dot"></span>Not live yet</div>
+
+    <h1>Something new is on the way</h1>
+    <p class="sub">Our official social media app is in the final stretch of development. Stay tuned — it's launching soon.</p>
+
+    <div class="countdown" id="countdown" aria-label="Time remaining until launch">
+      <div class="cbox"><div class="cnum" id="cd-days">00</div><div class="clabel">Days</div></div>
+      <div class="csep">:</div>
+      <div class="cbox"><div class="cnum" id="cd-hours">00</div><div class="clabel">Hours</div></div>
+      <div class="csep">:</div>
+      <div class="cbox"><div class="cnum" id="cd-mins">00</div><div class="clabel">Minutes</div></div>
+      <div class="csep">:</div>
+      <div class="cbox"><div class="cnum" id="cd-secs">00</div><div class="clabel">Seconds</div></div>
+    </div>
+
+    <button class="download-btn" id="download-btn" disabled aria-disabled="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+      Download App
+    </button>
+    <p class="download-note" id="download-note">Available once the app publishes</p>
+
+    <div class="powered">
+      <span class="powered-label">Powered by</span>
+      <img src="orame-logo.png" alt="Orame">
+    </div>
+
+    <div class="ad-slot">
+      <!-- Banner ad (320x50) -->
+      <script>
+        atOptions = {
+          'key' : '47dcd0c44e426226e1e6a69490cc5c27',
+          'format' : 'iframe',
+          'height' : 50,
+          'width' : 320,
+          'params' : {}
+        };
+      </script>
+      <script src="https://www.highrevenueformat.com/47dcd0c44e426226e1e6a69490cc5c27/invoke.js"></script>
+    </div>
+
+    <footer>© 2026 Metxpal. All rights reserved.</footer>
+
+  </div>
+
+<!-- ===== Firebase ===== -->
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js"></script>
+<script>
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyDxyAfXhKN09Fh-5HXdWbyFrKGZfiwJTlo",
+    authDomain: "meetlity-3be01.firebaseapp.com",
+    databaseURL: "https://meetlity-3be01-default-rtdb.firebaseio.com",
+    projectId: "meetlity-3be01",
+    storageBucket: "meetlity-3be01.firebasestorage.app",
+    messagingSenderId: "402099926615",
+    appId: "1:402099926615:web:b87d379595abac063b1512",
+    measurementId: "G-KW7KXZM5CM"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // ---- Visitor counting ----
+  // Every page load: bump the total counter, and log this visit (with a guessed
+  // device/browser name) under metxpalVisitors/log/<pushId>.
+  function getDeviceName(){
+    const ua = navigator.userAgent || "";
+    let os = "Unknown OS";
+    if(/Android/i.test(ua)) os = "Android";
+    else if(/iPhone|iPad|iPod/i.test(ua)) os = "iOS";
+    else if(/Windows/i.test(ua)) os = "Windows";
+    else if(/Mac OS X/i.test(ua)) os = "macOS";
+    else if(/Linux/i.test(ua)) os = "Linux";
+
+    let browser = "Unknown Browser";
+    if(/Edg\//i.test(ua)) browser = "Edge";
+    else if(/Chrome\//i.test(ua) && !/Chromium/i.test(ua)) browser = "Chrome";
+    else if(/Firefox\//i.test(ua)) browser = "Firefox";
+    else if(/Safari\//i.test(ua) && !/Chrome\//i.test(ua)) browser = "Safari";
+
+    return os + " · " + browser;
+  }
+
+  function recordVisit(){
+    const statsRef = db.ref('metxpalVisitors/count');
+    statsRef.transaction(function(current){
+      return (current || 0) + 1;
+    }, function(error, committed, snapshot){
+      if(!error && snapshot){
+        document.querySelector('#visitor-count b').textContent = snapshot.val();
+      }
+    });
+
+    const logRef = db.ref('metxpalVisitors/log').push();
+    logRef.set({
+      device: getDeviceName(),
+      userAgent: navigator.userAgent,
+      time: firebase.database.ServerValue.TIMESTAMP
+    });
+  }
+
+  // Show the live count as it changes, and record this visit.
+  db.ref('metxpalVisitors/count').on('value', function(snap){
+    document.querySelector('#visitor-count b').textContent = snap.val() || 0;
+  });
+  recordVisit();
+
+  // ---- Download button ----
+  // The admin panel (admin.html) writes the real link to metxpalConfig/downloadUrl.
+  // Until that exists, the button stays disabled.
+  const downloadBtn = document.getElementById('download-btn');
+  const downloadNote = document.getElementById('download-note');
+
+  db.ref('metxpalConfig/downloadUrl').on('value', function(snap){
+    const url = snap.val();
+    if(url){
+      downloadBtn.disabled = false;
+      downloadBtn.removeAttribute('aria-disabled');
+      downloadBtn.classList.add('enabled');
+      downloadNote.textContent = 'Tap to download the latest version';
+      downloadBtn.onclick = function(){ window.location.href = url; };
+    } else {
+      downloadBtn.disabled = true;
+      downloadBtn.setAttribute('aria-disabled', 'true');
+      downloadBtn.classList.remove('enabled');
+      downloadNote.textContent = 'Available once the app publishes';
+      downloadBtn.onclick = null;
+    }
+  });
+</script>
+
+<script>
+  // Countdown to Sep 18 (current or next year), local midnight — no date shown, count only
+  (function(){
+    function getTarget(){
+      var now = new Date();
+      var year = now.getFullYear();
+      var target = new Date(year, 8, 18, 0, 0, 0); // month is 0-indexed: 8 = September
+      if(target.getTime() < now.getTime()){
+        target = new Date(year + 1, 8, 18, 0, 0, 0);
+      }
+      return target;
+    }
+
+    var target = getTarget();
+    var d = document.getElementById('cd-days');
+    var h = document.getElementById('cd-hours');
+    var m = document.getElementById('cd-mins');
+    var s = document.getElementById('cd-secs');
+
+    function pad(n){ return String(n).padStart(2,'0'); }
+
+    function tick(){
+      var now = new Date().getTime();
+      var diff = target.getTime() - now;
+      if(diff <= 0){
+        d.textContent = '00'; h.textContent = '00'; m.textContent = '00'; s.textContent = '00';
+        return;
+      }
+      var days = Math.floor(diff / (1000*60*60*24));
+      var hours = Math.floor((diff % (1000*60*60*24)) / (1000*60*60));
+      var mins = Math.floor((diff % (1000*60*60)) / (1000*60));
+      var secs = Math.floor((diff % (1000*60)) / 1000);
+
+      d.textContent = pad(days);
+      h.textContent = pad(hours);
+      m.textContent = pad(mins);
+      s.textContent = pad(secs);
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
+
+</body>
+</html>
